@@ -4,11 +4,7 @@
     "crm-api": {
       "entrypoint": ".",
       "routePrefix": "/",
-      "framework": "nestjs"
-    }
-  },
-  "functions": {
-    "api/index.ts": {
+      "framework": "nestjs",
       "memory": 1024,
       "maxDuration": 30,
       "includeFiles": "dist/**"
