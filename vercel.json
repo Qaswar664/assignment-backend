@@ -1,5 +1,12 @@
 {
   "version": 2,
+  "experimentalServices": {
+    "crm-api": {
+      "entrypoint": ".",
+      "routePrefix": "/",
+      "framework": "nestjs"
+    }
+  },
   "rewrites": [
     {
       "source": "/(.*)",
