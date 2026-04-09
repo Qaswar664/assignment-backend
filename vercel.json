@@ -7,7 +7,7 @@
       "framework": "nestjs",
       "memory": 1024,
       "maxDuration": 30,
-      "includeFiles": "dist/**"
+      "includeFiles": ["dist/**", "node_modules/.prisma/**"]
     }
   },
   "rewrites": [

@@ -9,14 +9,24 @@ import { setupApplication } from './setup-app';
 let expressApp: any;
 
 export default async function handler(req: Request, res: Response): Promise<void> {
-  if (!expressApp) {
-    const app = await NestFactory.create(AppModule, {
-      logger: ['error', 'warn'],
-    });
-    setupApplication(app);
-    await app.init();
-    expressApp = app.getHttpAdapter().getInstance();
-    Logger.log('Nest app initialized for Vercel');
+  try {
+    if (!expressApp) {
+      const app = await NestFactory.create(AppModule, {
+        logger: ['error', 'warn'],
+      });
+      setupApplication(app);
+      await app.init();
+      expressApp = app.getHttpAdapter().getInstance();
+      Logger.log('Nest app initialized for Vercel');
+    }
+    expressApp(req, res);
+  } catch (err) {
+    Logger.error('Vercel handler bootstrap failed', err instanceof Error ? err.stack : String(err));
+    if (!res.headersSent) {
+      res.status(500).json({
+        success: false,
+        message: err instanceof Error ? err.message : 'Bootstrap failed',
+      });
+    }
   }
-  expressApp(req, res);
 }
